@@ -1,6 +1,6 @@
 import random
 import getpass
-from pyperclip import *
+import pyperclip
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
             'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
@@ -31,7 +31,7 @@ while True:
 result = ''
 for _ in range(number_of_characters):
     result += alphabet[random.randint(0, 74)]
-copy(result)
+pyperclip.copy(result)
 print('\n' + 'Пароль: ' + result + '\n' + 'Пароль успешно скопирован в буфер обмена')
 
 while True:
