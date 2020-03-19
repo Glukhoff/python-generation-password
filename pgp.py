@@ -7,7 +7,6 @@ alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'
             'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '!', '@', '#', '$',
             '%', '&', '*', '(', ')', '/', '|', '>', '<', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
-
 author = 'Пароль сгенерирован с помошью ~ Python Generator Password ~'
 yes = ['Y', 'y', 'Д', 'д']
 no = ['N', 'n', 'Н', 'н']
@@ -20,46 +19,47 @@ Version: 0.3 | 2020
 ''')
 
 
-
-# def check_system():
-#     check_sys = platform.uname().system
-#     if check_sys == 'Linux':
-#         home_directory =
-
-while True:
-    try:
-        number_of_characters = int(input('Количество символов: '))
-        break
-    except:
-        print('На ввод принимаются только целые числа, попробуйте еще раз.')
-        continue
-
-result = ''
-for _ in range(number_of_characters):
-    result += alphabet[random.randint(0, 74)]
-try:
-    pyperclip.copy(result)
-except:
-    print('Ошибка при копировании в буфер обмена')
-
-print('\n' + 'Пароль: ' + result + '\n' + 'Пароль успешно скопирован в буфер обмена')
-
-while True:
-    try:
-        save = str(input('Сохранить его в файл? [y/N]: '))
-        if save in yes:
-            input_name_file = input('Имя файла: ')
-            login = input('Логин: ')
-            f = open(os.getenv('HOME') + '/Desktop/' + input_name_file + '.txt', 'w')
-            f.write(author + '\n\n' + 'Логин: ' + login + '\n' + 'Пароль: ' + result)
-            f.close()
-            print("Пароль сохранен.")
+def num_char():
+    while True:
+        try:
+            number_of_characters = int(input('Количество символов: '))
             break
-        elif save in no:
-            print('Пароль не был сохранён, но мы не рекомендуем так делать!')
-            break
-        else:
-            print('\n' + 'Введено не верное значение' + '\n')
+        except:
+            print('На ввод принимаются только целые числа, попробуйте еще раз.')
+            continue
+    return number_of_characters
+
+
+def copy_clip(copy_object):
+    try:
+        pyperclip.copy(copy_object)
+        print('Пароль успешно скопирован в буфер обмена')
     except:
-        print('На ввод принимаются только целые числа, попробуйте еще раз.')
-        continue
+        print('Ошибка при копировании пароля в буфер обмена')
+
+
+def randpass():
+    result = ''
+    for _ in range(num_char()):
+        result += alphabet[random.randint(0, 74)]
+    print('Пароль: ' + result)
+    copy_clip(result)
+    return result
+
+
+def save_pass(randpass=randpass()):
+    save = str(input('Сохранить его в файл? [y/N]: '))
+    if save in yes:
+        input_name_file = input('Имя файла: ')
+        login = input('Логин: ')
+        f = open(os.getenv('HOME') + '/Desktop/' + input_name_file + '.txt', 'w')
+        f.write(author + '\n\n' + 'Логин: ' + login + '\n' + 'Пароль: ' + randpass)
+        f.close()
+        print("Пароль сохранен.")
+    elif save in no:
+        print('Пароль не был сохранён, но мы не рекомендуем так делать!')
+    else:
+        print('\n' + 'Введено не верное значение' + '\n')
+
+
+save_pass()
