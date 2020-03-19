@@ -20,6 +20,12 @@ Version: 0.3 | 2020
 ''')
 
 
+
+# def check_system():
+#     check_sys = platform.uname().system
+#     if check_sys == 'Linux':
+#         home_directory =
+
 while True:
     try:
         number_of_characters = int(input('Количество символов: '))
@@ -44,7 +50,7 @@ while True:
         if save in yes:
             input_name_file = input('Имя файла: ')
             login = input('Логин: ')
-            f = open('/Users/' + os.getlogin() + '/Desktop/' + input_name_file + '.txt', 'w')
+            f = open(os.getenv('HOME') + '/Desktop/' + input_name_file + '.txt', 'w')
             f.write(author + '\n\n' + 'Логин: ' + login + '\n' + 'Пароль: ' + result)
             f.close()
             print("Пароль сохранен.")
