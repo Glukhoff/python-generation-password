@@ -9,7 +9,7 @@ yes = ['Y', 'y', 'Д', 'д']
 print('''
 --------------------------------------
 Python Generator Password - for Mac OS
-Version: 0.4 | 2020 
+Version: 1.2 | 2020 
 --------------------------------------
 ''')
 
@@ -17,7 +17,7 @@ Version: 0.4 | 2020
 def num_char():
     while True:
         try:
-            number_of_characters = int(input('Для генерации пароля укажите необходимое' + '\n' + 'количество символов: '))
+            number_of_characters = int(input('Для генерации пароля укажите необходимое\nколичество символов: '))
             break
         except:
             print('На ввод принимаются только целые числа, попробуйте еще раз.')
@@ -38,9 +38,9 @@ def _random_pass():
     result = ''
     for _ in range(num_char()):
         result += random.choice(alphabet)
-    print('''
+    print(f'''
 --------------------------------------
-Пароль: ''' + result + '''
+Пароль: {result}
 --------------------------------------''')
     copy_clip(result)
     return result
