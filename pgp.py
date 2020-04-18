@@ -5,7 +5,6 @@ import os, string
 
 author = 'Пароль сгенерирован с помошью ~ Python Generator Password ~'
 yes = ['Y', 'y', 'Д', 'д']
-no = ['N', 'n', 'Н', 'н']
 
 print('''
 --------------------------------------
@@ -34,7 +33,7 @@ def copy_clip(copy_object):
         print('Ошибка при копировании пароля в буфер обмена')
 
 
-def randpass():
+def _random_pass():
     alphabet = string.ascii_letters + string.digits + string.punctuation
     result = ''
     for _ in range(num_char()):
@@ -47,22 +46,31 @@ def randpass():
     return result
 
 
-def save_pass(randpass=randpass()):
-    while True:
-        save = str(input('Сохранить его в файл? [y/N]: '))
-        if save in yes:
-            input_name_file = input('Имя файла: ')
-            login = input('Укажите логин которому принадлежит этот пароль: ')
-            f = open(os.getenv('HOME') + '/Desktop/' + input_name_file + '.txt', 'w')
-            f.write(author + '\n\n' + 'Логин: ' + login + '\n' + 'Пароль: ' + randpass)
-            f.close()
-            print('Готово')
-            break
-        elif save in no:
-            print('Пароль не был сохранён, но мы не рекомендуем так делать!')
-            break
-        else:
-            print('\n' + 'Введено не верное значение' + '\n')
-            continue
+def _save_password(name_file: str, login: str, password: str):
+    """
+    :param login: Логин, которому принадлежит сгенерированый пароль [по умолчанию значение None]
+    :param password: Сгенерированый пароль [по умолчанию значение None]
+    :param name_file: Имя файла в котором будет сохранен сгенерированый пароль [имя файла по умолчанию key.txt]
+    :return:
+    """
+    with open(f"{os.getenv('HOME')}/Desktop/{name_file}.txt", "a") as f:
+        f.write(f"Логин: {login}\nПароль: {password}")
+        f.close()
 
-save_pass()
+
+def run():
+    password = _random_pass()
+    save = str(input("Сохранить его в файл? [y/N]: "))
+    if save in yes:
+        name_file = input("Имя файла: ")
+        login = input("Укажите логин, которому принадлежит этот пароль: ")
+        if name_file and login != '':
+            _save_password(name_file, login, password)
+        else:
+            _save_password(name_file='key', login='None', password=password)
+    else:
+        print("Пароль не был сохранён, но мы не рекомендуем так делать!")
+
+
+if __name__ == '__main__':
+    run()
