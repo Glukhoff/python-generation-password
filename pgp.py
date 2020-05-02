@@ -2,7 +2,6 @@ import random
 import pyperclip
 import os, string
 
-
 author = 'Пароль сгенерирован с помошью ~ Python Generator Password ~'
 yes = ['Y', 'y', 'Д', 'д']
 
@@ -12,6 +11,10 @@ Python Generator Password - for Mac OS
 Version: 1.2 | 2020 
 --------------------------------------
 ''')
+
+
+def format_password(password):
+    return "-" * 30 + "\nПароль: {}\n".format(password) + "-" * 30
 
 
 def num_char():
@@ -26,11 +29,8 @@ def num_char():
 
 
 def copy_clip(copy_object):
-    try:
-        pyperclip.copy(copy_object)
-        print('Пароль скопирован в буфер обмена')
-    except:
-        print('Ошибка при копировании пароля в буфер обмена')
+    pyperclip.copy(copy_object)
+    print('Пароль скопирован в буфер обмена')
 
 
 def _random_pass():
@@ -38,10 +38,7 @@ def _random_pass():
     result = ''
     for _ in range(num_char()):
         result += random.choice(alphabet)
-    print(f'''
---------------------------------------
-Пароль: {result}
---------------------------------------''')
+    print(format_password(password=result))
     copy_clip(result)
     return result
 
@@ -53,8 +50,8 @@ def _save_password(name_file: str, login: str, password: str):
     :param name_file: Имя файла в котором будет сохранен сгенерированый пароль [имя файла по умолчанию key.txt]
     :return:
     """
-    with open(f"{os.getenv('HOME')}/Desktop/{name_file}.txt", "a") as f:
-        f.write(f"Логин: {login}\nПароль: {password}")
+    with open("{}/Desktop/{}.txt".format(os.getenv('HOME'), name_file), "a") as f:
+        f.write("Логин: {}\nПароль: {}".format(login, password))
         f.close()
 
 
