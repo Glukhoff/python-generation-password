@@ -52,7 +52,6 @@ def _save_password(name_file: str, login: str, password: str):
     """
     with open("{}/Desktop/{}.txt".format(os.getenv('HOME'), name_file), "a") as f:
         f.write("Логин: {}\nПароль: {}".format(login, password))
-        f.close()
 
 
 def run():
